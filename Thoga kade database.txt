@@ -1,0 +1,4506 @@
+CREATE DATABASE ThogaKade;
+
+USE ThogaKade;
+
+CREATE TABLE Customer(
+	id VARCHAR(6) NOT NULL,
+	name VARCHAR(30),
+	address VARCHAR(30),
+	salary DECIMAL(10,2),
+	CONSTRAINT PRIMARY KEY (id)
+);
+
+CREATE TABLE Orders(
+	id VARCHAR(6) NOT NULL,
+	date DATE,
+	customerId VARCHAR(6) NOT NULL,
+	CONSTRAINT PRIMARY KEY (id),
+	CONSTRAINT FOREIGN KEY(customerId) REFERENCES Customer(id) on update cascade on delete cascade
+);
+
+CREATE TABLE Item(
+	code VARCHAR(6) NOT NULL,
+	description VARCHAR(50),
+	unitPrice DECIMAL(8,2),
+	qtyOnHand INT(5),
+	CONSTRAINT PRIMARY KEY (code)
+);
+
+CREATE TABLE OrderDetail(
+	orderId VARCHAR(6) NOT NULL,
+	itemCode VARCHAR(6) NOT NULL,
+	qty INT(11),
+	unitPrice DECIMAL(8,2),
+	CONSTRAINT PRIMARY KEY (orderId,itemCode),
+	CONSTRAINT FOREIGN KEY (orderId) REFERENCES Orders(id) on update cascade on delete cascade,
+	CONSTRAINT FOREIGN KEY (itemCode) REFERENCES Item(code)on update cascade on delete cascade
+);
+
+INSERT INTO Customer VALUES('C001','Danapala','Panadura',54000);
+INSERT INTO Customer VALUES('C002','Gunapala','Matara',44000);
+INSERT INTO Customer VALUES('C003','Somapala','Galle',82000);
+INSERT INTO Customer VALUES('C004','Siripala','Galle',24000);
+INSERT INTO Customer VALUES('C005','Jinadasa','Panadura',94000);
+INSERT INTO Customer VALUES('C006','Sepalika','Kalutara',58000);
+INSERT INTO Customer VALUES('C007','Jinasena','Ambalangoda',51000);
+INSERT INTO Customer VALUES('C008','Somadasa','Baddegama',34000);
+INSERT INTO Customer VALUES('C009','Danasiri','Moratuwa',29000);
+INSERT INTO Customer VALUES('C010','Somasiri','Kandy',64000);
+
+
+
+INSERT INTO Item VALUES('P001','Keerisamba Retail',105.00,3000);
+INSERT INTO Item VALUES('P002','Keerisamba 5Kg ',525.00,200);
+INSERT INTO Item VALUES('P003','Keerisamba 10Kg',995.00,36);
+INSERT INTO Item VALUES('P004','Keerisamba 50Kg',4100.00,36);
+INSERT INTO Item VALUES('P005','Red Raw Rice',60.00,6000);
+INSERT INTO Item VALUES('P006','Red Raw Rice 10Kg Pack',560.00,300);
+INSERT INTO Item VALUES('P007','Red Raw Rice 50Kg Pack',5230.00,80);
+INSERT INTO Item VALUES('P008','White Raw Rice 5Kg Pack',275.00,130);
+INSERT INTO Item VALUES('P009','White Raw Rice 50Kg Pack',2600.00,13);
+INSERT INTO Item VALUES('P010','Wattana Dhal 500g',90.00,83);
+INSERT INTO Item VALUES('P011','Wattana Dhal 1Kg',170.00,40);
+INSERT INTO Item VALUES('P012','Mysoor Dhal 500g',90.00,89);
+INSERT INTO Item VALUES('P013','Mysoor Dhal 1Kg',180.00,59);
+INSERT INTO Item VALUES('P014','Orient Green Gram 500g',118.00,39);
+INSERT INTO Item VALUES('P015','Orient Green Gram 1Kg',220.00,12);
+INSERT INTO Item VALUES('P016','Anchor F/C Milk powder 450g',220.00,93);
+INSERT INTO Item VALUES('P017','Anchor F/C Milk powder 1Kg',580.00,40);
+INSERT INTO Item VALUES('P018','Anchor N/F Milk powder 1Kg',560.00,33);
+INSERT INTO Item VALUES('P019','Milo Packet 400g',240.00,33);
+INSERT INTO Item VALUES('P020','Lipton Ceylon Tea 100g',107.00,40);
+
+
+INSERT INTO Orders VALUES('D001','2008-2-15','C001');
+INSERT INTO Orders VALUES('D002','2008-2-15','C005');
+INSERT INTO Orders VALUES('D003','2008-2-20','C007');
+INSERT INTO Orders VALUES('D004','2008-2-28','C002');
+INSERT INTO Orders VALUES('D005','2008-3-20','C001');
+INSERT INTO Orders VALUES('D006','2008-4-10','C003');
+INSERT INTO Orders VALUES('D007','2008-5-10','C004');
+INSERT INTO Orders VALUES('D008','2008-6-20','C005');
+INSERT INTO Orders VALUES('D009','2008-8-12','C006');
+INSERT INTO Orders VALUES('D010','2008-9-20','C006');
+INSERT INTO Orders VALUES('D011','2009-2-13','C002');
+INSERT INTO Orders VALUES('D012','2009-2-16','C007');
+INSERT INTO Orders VALUES('D013','2009-2-20','C009');
+INSERT INTO Orders VALUES('D014','2009-3-16','C002');
+INSERT INTO Orders VALUES('D015','2009-4-15','C007');
+INSERT INTO Orders VALUES('D016','2009-8-26','C009');
+INSERT INTO Orders VALUES('D017','2010-2-16','C010');
+INSERT INTO Orders VALUES('D018','2010-3-26','C002');
+INSERT INTO Orders VALUES('D019','2011-6-11','C010');
+INSERT INTO Orders VALUES('D020','2011-9-26','C010');
+
+
+INSERT INTO OrderDetail VALUES('D001','P001',3,105.00);
+INSERT INTO OrderDetail VALUES('D001','P002',5,525.00);
+INSERT INTO OrderDetail VALUES('D001','P003',8,995.00);
+INSERT INTO OrderDetail VALUES('D001','P006',1,560.00);
+INSERT INTO OrderDetail VALUES('D002','P002',4,525.00);
+INSERT INTO OrderDetail VALUES('D002','P003',4,995.00);
+INSERT INTO OrderDetail VALUES('D002','P008',3,275.00);
+INSERT INTO OrderDetail VALUES('D002','P010',7,90.00);
+INSERT INTO OrderDetail VALUES('D002','P012',3,90.00);
+INSERT INTO OrderDetail VALUES('D003','P001',9,105.00);
+INSERT INTO OrderDetail VALUES('D003','P004',6,4100.00);
+INSERT INTO OrderDetail VALUES('D003','P014',7,118.00);
+INSERT INTO OrderDetail VALUES('D004','P002',2,525.00);
+INSERT INTO OrderDetail VALUES('D004','P005',7,60.00);
+INSERT INTO OrderDetail VALUES('D004','P008',1,275.00);
+INSERT INTO OrderDetail VALUES('D004','P019',9,240.00);
+INSERT INTO OrderDetail VALUES('D004','P015',5,220.00);
+INSERT INTO OrderDetail VALUES('D004','P016',8,220.00);
+INSERT INTO OrderDetail VALUES('D004','P020',5,107.00);
+INSERT INTO OrderDetail VALUES('D004','P012',2,90.00);
+INSERT INTO OrderDetail VALUES('D004','P004',3,190.00);
+INSERT INTO OrderDetail VALUES('D004','P014',4,118.00);
+INSERT INTO OrderDetail VALUES('D005','P001',6,105.00);
+INSERT INTO OrderDetail VALUES('D005','P003',8,995.00);
+INSERT INTO OrderDetail VALUES('D005','P017',9,5230.00);
+INSERT INTO OrderDetail VALUES('D006','P003',9,995.00);
+INSERT INTO OrderDetail VALUES('D006','P006',8,560.00);
+INSERT INTO OrderDetail VALUES('D007','P020',1,107.00);
+INSERT INTO OrderDetail VALUES('D008','P001',3,105.00);
+INSERT INTO OrderDetail VALUES('D009','P002',2,525.00);
+INSERT INTO OrderDetail VALUES('D009','P003',2,995.00);
+INSERT INTO OrderDetail VALUES('D009','P005',2,60.00);
+INSERT INTO OrderDetail VALUES('D009','P007',9,5230.00);
+INSERT INTO OrderDetail VALUES('D009','P008',2,275.00);
+INSERT INTO OrderDetail VALUES('D009','P001',9,105.00);
+INSERT INTO OrderDetail VALUES('D009','P006',5,560.00);
+INSERT INTO OrderDetail VALUES('D010','P010',6,90.00);
+INSERT INTO OrderDetail VALUES('D010','P012',3,90.00);
+INSERT INTO OrderDetail VALUES('D010','P004',6,4100.00);
+INSERT INTO OrderDetail VALUES('D010','P001',6,105.00);
+INSERT INTO OrderDetail VALUES('D010','P016',5,220.00);
+INSERT INTO OrderDetail VALUES('D010','P002',3,525.00);
+
+/////////////////////////////////////////////////////////////////////
+Q1
+class Demo{
+	public static void main(String args[]){ 
+		1.	Create a SQL
+		2.	Run the Driver S/W for mysql
+		3.	Create a Connection
+		4.	Create a Statement
+		5.	Execute the SQL
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+Q2
+class Demo{
+	public static void main(String args[]){ 
+		1.	String SQL="Insert into Customer Values('C011','Jinasena','Moratuwa',50000)";
+		2.	
+
+///////////////////////////////////////////////////////////////////////////
+Q1Name("Driver");
+		3.	Connection conn=DriverManager.getConnection("mysql database URL");
+		4.	Statement stm=conn.createStatement();
+		5.	stm.executeUpdate(SQL);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q3
+class Demo{
+	public static void main(String args[]){ 
+		String SQL="Insert into Customer Values('C011','Jinasena','Moratuwa',50000)";
+		Class.forName("Driver");
+		Connection conn=DriverManager.getConnection("mysql database URL");
+		Statement stm=conn.createStatement();
+		stm.executeUpdate(SQL);
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+Q4
+import java.sql.*;
+class Demo{
+	public static void main(String args[]){ 
+		String SQL="Insert into Customer Values('C011','Jinasena','Moratuwa',50000)";
+		Class.forName("Driver");
+		Connection conn=DriverManager.getConnection("mysql database URL");
+		Statement stm=conn.createStatement();
+		stm.executeUpdate(SQL);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////
+Q5
+import java.sql.*;
+class Demo{
+	public static void main(String args[]){ 
+		String SQL="Insert into Customer Values('C011','Jinasena','Moratuwa',50000)";
+		try{
+			Class.forName("Driver"); //throws ClassNotFoundException
+			Connection conn=DriverManager.getConnection("mysql database URL"); //throws SQLException
+			Statement stm=conn.createStatement(); //throws SQLException
+			stm.executeUpdate(SQL);	//throws SQLException
+		}catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}catch(ClassNotFoundException ex){
+			System.out.println("Driver S/W not found....");
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+Q6
+import java.sql.*;
+class Demo{
+	public static void main(String args[]){ 
+		String SQL="Insert into Customer Values('C011','Jinasena','Moratuwa',50000)";
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+			Statement stm=conn.createStatement();
+			stm.executeUpdate(SQL);	
+		}catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}catch(ClassNotFoundException ex){
+			System.out.println("Driver S/W not found....");
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+Q7 Execute an update Query
+===========================
+import java.sql.*;
+class Demo{
+	public static void main(String args[]){ 
+		String SQL="Update Customer set salary=salary*1.25";
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+			Statement stm=conn.createStatement();
+			stm.executeUpdate(SQL);	
+		}catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}catch(ClassNotFoundException ex){
+			System.out.println("Driver S/W not found....");
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+Q8 Execute a delete Query
+=========================
+import java.sql.*;
+class Demo{
+	public static void main(String args[]){ 
+		String SQL="Delete From Customer where id='C001'";
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+			Statement stm=conn.createStatement();
+			stm.executeUpdate(SQL);	
+		}catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}catch(ClassNotFoundException ex){
+			System.out.println("Driver S/W not found....");
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////
+Q9 Execute a select query (Runtime error)
+========================= ===============
+import java.sql.*;
+class Demo{
+	public static void main(String args[]){ 
+		String SQL="Select * From Customer";
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+			Statement stm=conn.createStatement();
+			stm.executeUpdate(SQL);	
+		}catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}catch(ClassNotFoundException ex){
+			System.out.println("Driver S/W not found....");
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////
+Q10
+import java.sql.*;
+class Demo{
+	public static void main(String args[]){ 
+		String SQL="Select * From Customer";
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+			Statement stm=conn.createStatement();
+			ResultSet rst=stm.executeQuery(SQL);	
+			rst.next();
+			String id=rst.getString("id");
+			String name=rst.getString("name");
+			String address=rst.getString("address");
+			double salary=rst.getDouble("salary");
+			System.out.println(id+"\t"+name+"\t"+address+"\t"+salary);
+		}catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}catch(ClassNotFoundException ex){
+			System.out.println("Driver S/W not found....");
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////
+Q11
+import java.sql.*;
+class Demo{
+	public static void main(String args[]){ 
+		String SQL="Select * From Customer";
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+			Statement stm=conn.createStatement();
+			ResultSet rst=stm.executeQuery(SQL);	
+			while(rst.next()){
+				String id=rst.getString("id");
+				String name=rst.getString("name");
+				String address=rst.getString("address");
+				double salary=rst.getDouble("salary");
+				System.out.println(id+"\t"+name+"\t"+address+"\t"+salary);
+			}
+			
+		}catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}catch(ClassNotFoundException ex){
+			System.out.println("Driver S/W not found....");
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+        AddCustomerForm    
+///////////////////////////////////////////////////////////////////////////
+Q12
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class AddCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton addButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	AddCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Add Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Add Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		addButton=new JButton("Add Customer");
+		addButton.setFont(new Font("",1,20));
+		addButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String id=idText.getText();
+				String name=nameText.getText();
+				String address=addressText.getText();
+				double salary=Double.parseDouble(salaryText.getText());
+				String SQL="Insert into Customer Values('"+id+"','"+name+"','"+address+"',"+salary+")";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					Statement stm=conn.createStatement();
+					int res=stm.executeUpdate(SQL);
+					if(res>0){
+						JOptionPane.showMessageDialog(AddCustomerForm.this,"Added Success");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(AddCustomerForm.this,ex.getMessage());
+				}
+			}
+		});
+		buttonPanel.add(addButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+class Demo{
+	public static void main(String args[]){
+		AddCustomerForm f1=new AddCustomerForm();
+		f1.setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q13 SearchCustomerForm
+======================
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class SearchCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton searchButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	SearchCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Search Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Search Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		searchButton=new JButton("Search Customer");
+		searchButton.setFont(new Font("",1,20));
+		searchButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(SearchCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(SearchCustomerForm.this,ex.getMessage());
+				}
+				
+			}
+		});
+		buttonPanel.add(searchButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+class Demo{
+	public static void main(String args[]){
+		SearchCustomerForm f1=new SearchCustomerForm();
+		f1.setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q14 From Q13
+============
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class SearchCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton searchButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	SearchCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Search Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Search Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		searchButton=new JButton("Search Customer");
+		searchButton.setFont(new Font("",1,20));
+		searchButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				
+			}
+		});
+		buttonPanel.add(searchButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(SearchCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(SearchCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+class Demo{
+	public static void main(String args[]){
+		SearchCustomerForm f1=new SearchCustomerForm();
+		f1.setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q15 Update Customer Form
+========================
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class UpdateCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton updateButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	UpdateCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Update Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Update Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		updateButton=new JButton("Update Customer");
+		updateButton.setFont(new Font("",1,20));
+		updateButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String SQL="Update Customer set name='"+nameText.getText()+"',address='"+addressText.getText()+"',salary="+salaryText.getText()+" where id='"+idText.getText()+"'";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					Statement stm=conn.createStatement();
+					int res=stm.executeUpdate(SQL);	
+					if(res>0){
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Success");
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(updateButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+class Demo{
+	public static void main(String args[]){
+		UpdateCustomerForm f1=new UpdateCustomerForm();
+		f1.setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q16 DeleteCustomerForm
+======================
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class DeleteCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton deleteButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	DeleteCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Delete Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Delete Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		deleteButton=new JButton("Delete Customer");
+		deleteButton.setFont(new Font("",1,20));
+		deleteButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String SQL="Delete From Customer where id='"+idText.getText()+"'";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					Statement stm=conn.createStatement();
+					int res=stm.executeUpdate(SQL);	
+					if(res>0){
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Success");
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(deleteButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+class Demo{
+	public static void main(String args[]){
+		DeleteCustomerForm f1=new DeleteCustomerForm();
+		f1.setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q17 ViewCustomerForm
+====================
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class ViewCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JTable customerTable;
+	private DefaultTableModel dtm;
+	private JButton reloadButton;
+	
+	ViewCustomerForm(){
+		setSize(500,500);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("View Customer Form");
+		setLocationRelativeTo(null);
+		titleLabel=new JLabel("View Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		JPanel buttonPanel=new JPanel();
+		reloadButton=new JButton("Reload");
+		reloadButton.setFont(new Font("",1,20));
+		reloadButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ect){
+				String SQL="Select * From Customer";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);
+					//DefaultTableModel dtm=(DefaultTableModel)customerTable.getModel();
+					dtm.setRowCount(0);
+					while(rst.next()){
+						Object[] rowData={rst.getString("id"),rst.getString("name"),rst.getString("address"),rst.getDouble("salary")};
+						dtm.addRow(rowData);
+					}	
+				}catch(SQLException | ClassNotFoundException ex){
+					
+				}	
+			}
+		});
+		buttonPanel.add(reloadButton);
+		add("South",buttonPanel);
+		
+		String[] names={"Id", "Name","Address","Salary"};
+		dtm=new DefaultTableModel(names,5);
+		dtm.setRowCount(5);
+		customerTable=new JTable(dtm);
+		JScrollPane tablePane=new JScrollPane(customerTable);
+		add("Center",tablePane);
+		pack();
+	}	
+}
+
+class Demo{
+	public static void main(String args[]){
+		new ViewCustomerForm().setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q18 AddCustomerForm using "PreparedStatement"
+=============================================
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class AddCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton addButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	AddCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Add Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Add Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		addButton=new JButton("Add Customer");
+		addButton.setFont(new Font("",1,20));
+		addButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String id=idText.getText();
+				String name=nameText.getText();
+				String address=addressText.getText();
+				double salary=Double.parseDouble(salaryText.getText());
+				String SQL="Insert into Customer Values(?,?,?,?)";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					PreparedStatement stm=conn.prepareStatement(SQL);
+					stm.setObject(1,id);
+					stm.setObject(2,name);
+					stm.setObject(3,address);
+					stm.setObject(4,salary);
+					
+					int res=stm.executeUpdate();
+					if(res>0){
+						JOptionPane.showMessageDialog(AddCustomerForm.this,"Added Success");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(AddCustomerForm.this,ex.getMessage());
+				}
+			}
+		});
+		buttonPanel.add(addButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+class Demo{
+	public static void main(String args[]){
+		AddCustomerForm f1=new AddCustomerForm();
+		f1.setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q19 AddCustomerForm using "PreparedStatement"
+=============================================
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class UpdateCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton updateButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	UpdateCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Update Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Update Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		updateButton=new JButton("Update Customer");
+		updateButton.setFont(new Font("",1,20));
+		updateButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String SQL="Update Customer set name=?,address=?,salary=? where id=?";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					PreparedStatement stm=conn.prepareStatement(SQL);
+					stm.setObject(1,nameText.getText());
+					stm.setObject(2,addressText.getText());
+					stm.setObject(3,salaryText.getText());
+					stm.setObject(4,idText.getText());
+					int res=stm.executeUpdate();	
+					if(res>0){
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Success");
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(updateButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+class Demo{
+	public static void main(String args[]){
+		UpdateCustomerForm f1=new UpdateCustomerForm();
+		f1.setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+        Singleton
+///////////////////////////////////////////////////////////////////////////
+Q20 Step I
+==========
+//---------------------------------DBConnection.java-----------------------
+import java.sql.*;
+public class DBConnection{
+	public static Connection getConnection()throws ClassNotFoundException,SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");		
+		return connection;
+	}
+}
+
+//---------------------------------AddCustomerForm.java-------------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class AddCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton addButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public AddCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Add Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Add Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		addButton=new JButton("Add Customer");
+		addButton.setFont(new Font("",1,20));
+		addButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String id=idText.getText();
+				String name=nameText.getText();
+				String address=addressText.getText();
+				double salary=Double.parseDouble(salaryText.getText());
+				String SQL="Insert into Customer Values(?,?,?,?)";
+				try{
+					Connection conn=DBConnection.getConnection();
+					PreparedStatement stm=conn.prepareStatement(SQL);
+					stm.setObject(1,id);
+					stm.setObject(2,name);
+					stm.setObject(3,address);
+					stm.setObject(4,salary);
+					
+					int res=stm.executeUpdate();
+					if(res>0){
+						JOptionPane.showMessageDialog(AddCustomerForm.this,"Added Success");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(AddCustomerForm.this,ex.getMessage());
+				}
+			}
+		});
+		buttonPanel.add(addButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------SearchCustomerForm.java-----------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class SearchCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton searchButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public SearchCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Search Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Search Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		searchButton=new JButton("Search Customer");
+		searchButton.setFont(new Font("",1,20));
+		searchButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				
+			}
+		});
+		buttonPanel.add(searchButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(SearchCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(SearchCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------UpdateCustomerForm.java-----------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class UpdateCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton updateButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	UpdateCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Update Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Update Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		updateButton=new JButton("Update Customer");
+		updateButton.setFont(new Font("",1,20));
+		updateButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String SQL="Update Customer set name=?,address=?,salary=? where id=?";
+				try{
+					Connection conn=DBConnection.getConnection();
+					PreparedStatement stm=conn.prepareStatement(SQL);
+					stm.setObject(1,nameText.getText());
+					stm.setObject(2,addressText.getText());
+					stm.setObject(3,salaryText.getText());
+					stm.setObject(4,idText.getText());
+					int res=stm.executeUpdate();	
+					if(res>0){
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Success");
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(updateButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+
+//---------------------------------DeleteCustomerForm.java-----------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class DeleteCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton deleteButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public DeleteCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Delete Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Delete Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		deleteButton=new JButton("Delete Customer");
+		deleteButton.setFont(new Font("",1,20));
+		deleteButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String SQL="Delete From Customer where id='"+idText.getText()+"'";
+				try{
+					Connection conn=DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					int res=stm.executeUpdate(SQL);	
+					if(res>0){
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Success");
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(deleteButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------ViewCustomerForm.java----------------
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class ViewCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JTable customerTable;
+	private DefaultTableModel dtm;
+	private JButton reloadButton;
+	
+	public ViewCustomerForm(){
+		setSize(500,500);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("View Customer Form");
+		setLocationRelativeTo(null);
+		titleLabel=new JLabel("View Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		JPanel buttonPanel=new JPanel();
+		reloadButton=new JButton("Reload");
+		reloadButton.setFont(new Font("",1,20));
+		reloadButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ect){
+				String SQL="Select * From Customer";
+				try{
+					Connection conn = DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);
+					//DefaultTableModel dtm=(DefaultTableModel)customerTable.getModel();
+					dtm.setRowCount(0);
+					while(rst.next()){
+						Object[] rowData={rst.getString("id"),rst.getString("name"),rst.getString("address"),rst.getDouble("salary")};
+						dtm.addRow(rowData);
+					}	
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(ViewCustomerForm.this,ex.getMessage());
+				}	
+			}
+		});
+		buttonPanel.add(reloadButton);
+		add("South",buttonPanel);
+		
+		String[] names={"Id", "Name","Address","Salary"};
+		dtm=new DefaultTableModel(names,5);
+		dtm.setRowCount(5);
+		customerTable=new JTable(dtm);
+		JScrollPane tablePane=new JScrollPane(customerTable);
+		add("Center",tablePane);
+		pack();
+	}	
+}
+
+//---------------------------------ThogaKadeMain.java--------------------
+class ThogaKadeMain{
+	public static void main(String args[]){
+		new ViewCustomerForm().setVisible(true);	
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q21 Step II
+===========
+//---------------------------------DBConnection.java-----------------------
+import java.sql.*;
+public class DBConnection{
+    private static Connection connection;
+	public static Connection getConnection()throws ClassNotFoundException,SQLException{
+        if(connection==null){
+    		Class.forName("com.mysql.jdbc.Driver");
+        	connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");		    
+        }
+		return connection;
+	}
+}
+
+//---------------------------------AddCustomerForm.java-------------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class AddCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton addButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public AddCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Add Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Add Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		addButton=new JButton("Add Customer");
+		addButton.setFont(new Font("",1,20));
+		addButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String id=idText.getText();
+				String name=nameText.getText();
+				String address=addressText.getText();
+				double salary=Double.parseDouble(salaryText.getText());
+				String SQL="Insert into Customer Values(?,?,?,?)";
+				try{
+					Connection conn=DBConnection.getConnection();
+					PreparedStatement stm=conn.prepareStatement(SQL);
+					stm.setObject(1,id);
+					stm.setObject(2,name);
+					stm.setObject(3,address);
+					stm.setObject(4,salary);
+					
+					int res=stm.executeUpdate();
+					if(res>0){
+						JOptionPane.showMessageDialog(AddCustomerForm.this,"Added Success");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(AddCustomerForm.this,ex.getMessage());
+				}
+			}
+		});
+		buttonPanel.add(addButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------SearchCustomerForm.java-----------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class SearchCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton searchButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public SearchCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Search Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Search Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		searchButton=new JButton("Search Customer");
+		searchButton.setFont(new Font("",1,20));
+		searchButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				
+			}
+		});
+		buttonPanel.add(searchButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(SearchCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(SearchCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------UpdateCustomerForm.java-----------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class UpdateCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton updateButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	UpdateCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Update Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Update Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		updateButton=new JButton("Update Customer");
+		updateButton.setFont(new Font("",1,20));
+		updateButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String SQL="Update Customer set name=?,address=?,salary=? where id=?";
+				try{
+					Connection conn=DBConnection.getConnection();
+					PreparedStatement stm=conn.prepareStatement(SQL);
+					stm.setObject(1,nameText.getText());
+					stm.setObject(2,addressText.getText());
+					stm.setObject(3,salaryText.getText());
+					stm.setObject(4,idText.getText());
+					int res=stm.executeUpdate();	
+					if(res>0){
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Success");
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(updateButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+
+//---------------------------------DeleteCustomerForm.java-----------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class DeleteCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton deleteButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public DeleteCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Delete Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Delete Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		deleteButton=new JButton("Delete Customer");
+		deleteButton.setFont(new Font("",1,20));
+		deleteButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String SQL="Delete From Customer where id='"+idText.getText()+"'";
+				try{
+					Connection conn=DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					int res=stm.executeUpdate(SQL);	
+					if(res>0){
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Success");
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(deleteButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------ViewCustomerForm.java----------------
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class ViewCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JTable customerTable;
+	private DefaultTableModel dtm;
+	private JButton reloadButton;
+	
+	public ViewCustomerForm(){
+		setSize(500,500);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("View Customer Form");
+		setLocationRelativeTo(null);
+		titleLabel=new JLabel("View Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		JPanel buttonPanel=new JPanel();
+		reloadButton=new JButton("Reload");
+		reloadButton.setFont(new Font("",1,20));
+		reloadButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ect){
+				String SQL="Select * From Customer";
+				try{
+					Connection conn = DBConnection.getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);
+					//DefaultTableModel dtm=(DefaultTableModel)customerTable.getModel();
+					dtm.setRowCount(0);
+					while(rst.next()){
+						Object[] rowData={rst.getString("id"),rst.getString("name"),rst.getString("address"),rst.getDouble("salary")};
+						dtm.addRow(rowData);
+					}	
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(ViewCustomerForm.this,ex.getMessage());
+				}	
+			}
+		});
+		buttonPanel.add(reloadButton);
+		add("South",buttonPanel);
+		
+		String[] names={"Id", "Name","Address","Salary"};
+		dtm=new DefaultTableModel(names,5);
+		dtm.setRowCount(5);
+		customerTable=new JTable(dtm);
+		JScrollPane tablePane=new JScrollPane(customerTable);
+		add("Center",tablePane);
+		pack();
+	}	
+}
+
+//---------------------------------ThogaKadeMain.java--------------------
+class ThogaKadeMain{
+	public static void main(String args[]){
+		new ViewCustomerForm().setVisible(true);	
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q22 Step III (Design pattern "singleton")
+============ ============================
+//---------------------------------DBConnection.java-----------------------
+import java.sql.*;
+public class DBConnection{
+	private Connection connection;
+	private static DBConnection dbConnection;
+	private DBConnection() throws ClassNotFoundException,SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade","root","ijse");		
+	}
+	public static DBConnection getInstance()throws ClassNotFoundException,SQLException{
+		if(dbConnection==null){
+			dbConnection=new DBConnection();
+		}
+		return dbConnection;
+	}
+	public Connection getConnection(){
+		return connection;	
+	}
+}
+//---------------------------------AddCustomerForm.java-------------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class AddCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton addButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public AddCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Add Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Add Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		addButton=new JButton("Add Customer");
+		addButton.setFont(new Font("",1,20));
+		addButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String id=idText.getText();
+				String name=nameText.getText();
+				String address=addressText.getText();
+				double salary=Double.parseDouble(salaryText.getText());
+				String SQL="Insert into Customer Values(?,?,?,?)";
+				try{
+					DBConnection ob=DBConnection.getInstance();
+					Connection conn=ob.getConnection();
+					//Connection conn=DBConnection.getInstance().getConnection();
+					PreparedStatement stm=conn.prepareStatement(SQL);
+					stm.setObject(1,id);
+					stm.setObject(2,name);
+					stm.setObject(3,address);
+					stm.setObject(4,salary);
+					
+					int res=stm.executeUpdate();
+					if(res>0){
+						JOptionPane.showMessageDialog(AddCustomerForm.this,"Added Success");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(AddCustomerForm.this,ex.getMessage());
+				}
+			}
+		});
+		buttonPanel.add(addButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------SearchCustomerForm.java---------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class SearchCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton searchButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public SearchCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Search Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Search Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		searchButton=new JButton("Search Customer");
+		searchButton.setFont(new Font("",1,20));
+		searchButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				
+			}
+		});
+		buttonPanel.add(searchButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getInstance().getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(SearchCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(SearchCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------UpdateCustomerForm.java---------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class UpdateCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton updateButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	UpdateCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Update Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Update Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		updateButton=new JButton("Update Customer");
+		updateButton.setFont(new Font("",1,20));
+		updateButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String SQL="Update Customer set name=?,address=?,salary=? where id=?";
+				try{
+					Connection conn=DBConnection.getInstance().getConnection();
+					PreparedStatement stm=conn.prepareStatement(SQL);
+					stm.setObject(1,nameText.getText());
+					stm.setObject(2,addressText.getText());
+					stm.setObject(3,salaryText.getText());
+					stm.setObject(4,idText.getText());
+					int res=stm.executeUpdate();	
+					if(res>0){
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Success");
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(updateButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getInstance().getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+
+//---------------------------------DeleteCustomerForm.java--------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class DeleteCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton deleteButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public DeleteCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Delete Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Delete Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		deleteButton=new JButton("Delete Customer");
+		deleteButton.setFont(new Font("",1,20));
+		deleteButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String SQL="Delete From Customer where id='"+idText.getText()+"'";
+				try{
+					Connection conn=DBConnection.getInstance().getConnection();
+					Statement stm=conn.createStatement();
+					int res=stm.executeUpdate(SQL);	
+					if(res>0){
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Success");
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(deleteButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getInstance().getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------ViewCustomerForm.java----------------
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class ViewCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JTable customerTable;
+	private DefaultTableModel dtm;
+	private JButton reloadButton;
+	
+	public ViewCustomerForm(){
+		setSize(500,500);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("View Customer Form");
+		setLocationRelativeTo(null);
+		titleLabel=new JLabel("View Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		JPanel buttonPanel=new JPanel();
+		reloadButton=new JButton("Reload");
+		reloadButton.setFont(new Font("",1,20));
+		reloadButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ect){
+				String SQL="Select * From Customer";
+				try{
+					Connection conn = DBConnection.getInstance().getConnection();
+					
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);
+					//DefaultTableModel dtm=(DefaultTableModel)customerTable.getModel();
+					dtm.setRowCount(0);
+					while(rst.next()){
+						Object[] rowData={rst.getString("id"),rst.getString("name"),rst.getString("address"),rst.getDouble("salary")};
+						dtm.addRow(rowData);
+					}	
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(ViewCustomerForm.this,ex.getMessage());
+				}	
+			}
+		});
+		buttonPanel.add(reloadButton);
+		add("South",buttonPanel);
+		
+		String[] names={"Id", "Name","Address","Salary"};
+		dtm=new DefaultTableModel(names,5);
+		dtm.setRowCount(5);
+		customerTable=new JTable(dtm);
+		JScrollPane tablePane=new JScrollPane(customerTable);
+		add("Center",tablePane);
+		pack();
+	}	
+}
+
+//---------------------------------ThogaKadeMain.java--------------------
+class ThogaKadeMain{
+	public static void main(String args[]){
+		new ViewCustomerForm().setVisible(true);	
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+    MVC (Model View Controller)
+///////////////////////////////////////////////////////////////////////////
+Q23 Step I
+==========
+//--------------------------------DBConnection.java---------------------
+import java.sql.*;
+public class DBConnection{
+	private Connection connection;
+	private static DBConnection dbConnection;
+	private DBConnection() throws ClassNotFoundException,SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		connection=DriverManager.getConnection("jdbc:mysql://192.168.1.36:3306/ThogaKade","ijse","ijse");		
+	}
+	public static DBConnection getInstance()throws ClassNotFoundException,SQLException{
+		if(dbConnection==null){
+			dbConnection=new DBConnection();
+		}
+		return dbConnection;
+	}
+	public Connection getConnection(){
+		return connection;	
+	}
+}
+
+//---------------------------------CustomerController.java---------------
+import java.sql.*;
+class CustomerController{
+	public static void addCustomer(String id, String name, String address, double salary)throws ClassNotFoundException, SQLException{
+		String SQL="Insert into Customer values(?,?,?,?)";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(1,id);
+		stm.setObject(2,name);
+		stm.setObject(3,address);
+		stm.setObject(4,salary);
+		stm.executeUpdate();
+	}
+}
+
+//--------------------------------AddCustomerForm.java------------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class AddCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton addButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public AddCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Add Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Add Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		addButton=new JButton("Add Customer");
+		addButton.setFont(new Font("",1,20));
+		addButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String id=idText.getText();
+				String name=nameText.getText();
+				String address=addressText.getText();
+				double salary=Double.parseDouble(salaryText.getText());
+				try{
+					CustomerController.addCustomer(id,name,address,salary);
+
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(AddCustomerForm.this,ex.getMessage());
+				}
+			}
+		});
+		buttonPanel.add(addButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------ThogaKadeMain.java--------------------
+class ThogaKadeMain{
+	public static void main(String args[]){
+		new ViewCustomerForm().setVisible(true);	
+        new AddCustomerForm().setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q24 Step II
+===========
+//--------------------------------DBConnection.java---------------------
+import java.sql.*;
+public class DBConnection{
+	private Connection connection;
+	private static DBConnection dbConnection;
+	private DBConnection() throws ClassNotFoundException,SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		connection=DriverManager.getConnection("jdbc:mysql://192.168.1.36:3306/ThogaKade","ijse","ijse");		
+	}
+	public static DBConnection getInstance()throws ClassNotFoundException,SQLException{
+		if(dbConnection==null){
+			dbConnection=new DBConnection();
+		}
+		return dbConnection;
+	}
+	public Connection getConnection(){
+		return connection;	
+	}
+}
+
+//---------------------------------CustomerController.java---------------
+import java.sql.*;
+class CustomerController{
+	public static boolean addCustomer(String id, String name, String address, double salary)throws ClassNotFoundException, SQLException{
+		String SQL="Insert into Customer values(?,?,?,?)";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(1,id);
+		stm.setObject(2,name);
+		stm.setObject(3,address);
+		stm.setObject(4,salary);
+		int res=stm.executeUpdate();
+		return res>0;
+	}
+}
+
+//----------------------------------AddCustomerForm.java--------------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class AddCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton addButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public AddCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Add Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Add Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		addButton=new JButton("Add Customer");
+		addButton.setFont(new Font("",1,20));
+		addButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String id=idText.getText();
+				String name=nameText.getText();
+				String address=addressText.getText();
+				double salary=Double.parseDouble(salaryText.getText());
+				try{
+					boolean isAdded=CustomerController.addCustomer(id,name,address,salary);
+					if(isAdded){
+						JOptionPane.showMessageDialog(AddCustomerForm.this,"?Added Success");
+					}
+
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(AddCustomerForm.this,ex.getMessage());
+				}
+			}
+		});
+		buttonPanel.add(addButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//---------------------------------ThogaKadeMain.java--------------------
+class ThogaKadeMain{
+	public static void main(String args[]){
+		new ViewCustomerForm().setVisible(true);	
+        new AddCustomerForm().setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q25 Step III (Model Class "Customer")
+=====================================
+//--------------------------------DBConnection.java------------------------
+import java.sql.*;
+public class DBConnection{
+	private Connection connection;
+	private static DBConnection dbConnection;
+	private DBConnection() throws ClassNotFoundException,SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		connection=DriverManager.getConnection("jdbc:mysql://192.168.1.36:3306/ThogaKade","ijse","ijse123");		
+	}
+	public static DBConnection getInstance()throws ClassNotFoundException,SQLException{
+		if(dbConnection==null){
+			dbConnection=new DBConnection();
+		}
+		return dbConnection;
+	}
+	public Connection getConnection(){
+		return connection;	
+	}
+}
+
+//--------------------------------Customer.java---------------------------
+public class Customer{
+	private String id;
+	private String name;
+	private String address;
+	private double salary;
+	
+	public Customer(){}
+	public Customer(String id, String name, String address, double salary){
+		this.id=id;
+		this.name=name;
+		this.address=address;
+		this.salary=salary;
+	}
+	public String getId(){
+		return id;
+	}
+	public String getName(){
+		return name;
+	}	
+	public String getAddress(){
+		return address;
+	}
+	public 	double getSalary(){
+		return salary;
+	}
+}
+
+//--------------------------------CustomerController.java-----------------
+import java.sql.*;
+public class CustomerController{
+	public static boolean addCustomer(Customer customer)throws ClassNotFoundException, SQLException{
+		String SQL="Insert into Customer values(?,?,?,?)";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(1,customer.getId());
+		stm.setObject(2,customer.getName());
+		stm.setObject(3,customer.getAddress());
+		stm.setObject(4,customer.getSalary());
+		int res=stm.executeUpdate();
+		return res>0;
+	}
+}
+
+//--------------------------------AddCustomerForm.java--------------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class AddCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton addButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public AddCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Add Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Add Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		addButton=new JButton("Add Customer");
+		addButton.setFont(new Font("",1,20));
+		addButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				String id=idText.getText();
+				String name=nameText.getText();
+				String address=addressText.getText();
+				double salary=Double.parseDouble(salaryText.getText());
+				Customer c1=new Customer(id,name,address,salary);
+				try{
+					boolean isAdded=CustomerController.addCustomer(c1);
+					if(isAdded){
+						JOptionPane.showMessageDialog(AddCustomerForm.this,"?Added Success");
+					}
+
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(AddCustomerForm.this,ex.getMessage());
+				}
+			}
+		});
+		buttonPanel.add(addButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//--------------------------------ThogaKadeMain.java---------------------------
+class ThogaKadeMain{
+	public static void main(String args[]){
+		//new ViewCustomerForm().setVisible(true);	
+		new AddCustomerForm().setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q26 Step IV (SearchCustomerForm with MVC)
+========================================
+//--------------------------------DBConnection.java------------------------
+import java.sql.*;
+public class DBConnection{
+	private Connection connection;
+	private static DBConnection dbConnection;
+	private DBConnection() throws ClassNotFoundException,SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		connection=DriverManager.getConnection("jdbc:mysql://192.168.1.36:3306/ThogaKade","ijse","ijse123");		
+	}
+	public static DBConnection getInstance()throws ClassNotFoundException,SQLException{
+		if(dbConnection==null){
+			dbConnection=new DBConnection();
+		}
+		return dbConnection;
+	}
+	public Connection getConnection(){
+		return connection;	
+	}
+}
+
+//--------------------------------Customer.java---------------------------
+public class Customer{
+	private String id;
+	private String name;
+	private String address;
+	private double salary;
+	
+	public Customer(){}
+	public Customer(String id, String name, String address, double salary){
+		this.id=id;
+		this.name=name;
+		this.address=address;
+		this.salary=salary;
+	}
+	public String getId(){
+		return id;
+	}
+	public String getName(){
+		return name;
+	}	
+	public String getAddress(){
+		return address;
+	}
+	public 	double getSalary(){
+		return salary;
+	}
+}
+
+//--------------------------------CustomerController.java-----------------
+import java.sql.*;
+public class CustomerController{
+	public static boolean addCustomer(Customer customer)throws ClassNotFoundException, SQLException{
+		String SQL="Insert into Customer values(?,?,?,?)";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(1,customer.getId());
+		stm.setObject(2,customer.getName());
+		stm.setObject(3,customer.getAddress());
+		stm.setObject(4,customer.getSalary());
+		int res=stm.executeUpdate();
+		return res>0;
+	}
+	public static Customer searchCustomer(String id)throws ClassNotFoundException, SQLException{
+		String SQL= "Select * From Customer where id='"+id+"'";
+		Connection connection=DBConnection.getInstance().getConnection();
+		Statement stm=connection.createStatement();
+		ResultSet rst=stm.executeQuery(SQL);		
+		if(rst.next()){
+			return new Customer(rst.getString("id"),rst.getString("name"),rst.getString("address"),rst.getDouble("salary"));
+		}else{
+			return null;
+		}				
+	}
+}
+
+//-----------------------------SearchCustomerForm.java----------------------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class SearchCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton searchButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public SearchCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Search Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Search Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		searchButton=new JButton("Search Customer");
+		searchButton.setFont(new Font("",1,20));
+		searchButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				
+			}
+		});
+		buttonPanel.add(searchButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				try{
+					Customer customer=CustomerController.searchCustomer(id);
+					if(customer!=null){
+						nameText.setText(customer.getName());
+						addressText.setText(customer.getAddress());
+						salaryText.setText(""+customer.getSalary());
+					}else{
+						JOptionPane.showMessageDialog(SearchCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(SearchCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+
+//--------------------------ThogaKadeMain.java------------------------
+class ThogaKadeMain{
+	public static void main(String args[]){
+		//new ViewCustomerForm().setVisible(true);	
+		new AddCustomerForm().setVisible(true);
+		new SearchCustomerForm().setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q27 Step V (UpdateCustomerForm with MVS)
+========================================
+//--------------------------------DBConnection.java------------------------
+import java.sql.*;
+public class DBConnection{
+	private Connection connection;
+	private static DBConnection dbConnection;
+	private DBConnection() throws ClassNotFoundException,SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		connection=DriverManager.getConnection("jdbc:mysql://192.168.1.36:3306/ThogaKade","ijse","ijse123");		
+	}
+	public static DBConnection getInstance()throws ClassNotFoundException,SQLException{
+		if(dbConnection==null){
+			dbConnection=new DBConnection();
+		}
+		return dbConnection;
+	}
+	public Connection getConnection(){
+		return connection;	
+	}
+}
+
+//--------------------------------Customer.java---------------------------
+public class Customer{
+	private String id;
+	private String name;
+	private String address;
+	private double salary;
+	
+	public Customer(){}
+	public Customer(String id, String name, String address, double salary){
+		this.id=id;
+		this.name=name;
+		this.address=address;
+		this.salary=salary;
+	}
+	public String getId(){
+		return id;
+	}
+	public String getName(){
+		return name;
+	}	
+	public String getAddress(){
+		return address;
+	}
+	public 	double getSalary(){
+		return salary;
+	}
+}
+
+//--------------------------------CustomerController.java-----------------
+import java.sql.*;
+public class CustomerController{
+	public static boolean addCustomer(Customer customer)throws ClassNotFoundException, SQLException{
+		String SQL="Insert into Customer values(?,?,?,?)";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(1,customer.getId());
+		stm.setObject(2,customer.getName());
+		stm.setObject(3,customer.getAddress());
+		stm.setObject(4,customer.getSalary());
+		int res=stm.executeUpdate();
+		return res>0;
+	}
+	public static boolean updateCustomer(Customer customer)throws ClassNotFoundException, SQLException{
+		String SQL="Update Customer set name=?,address=?,salary=? where id=?";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(4,customer.getId());
+		stm.setObject(1,customer.getName());
+		stm.setObject(2,customer.getAddress());
+		stm.setObject(3,customer.getSalary());
+		
+		int res=stm.executeUpdate();
+		return res>0;
+	}	
+	public static Customer searchCustomer(String id)throws ClassNotFoundException, SQLException{
+		String SQL= "Select * From Customer where id='"+id+"'";
+		Connection connection=DBConnection.getInstance().getConnection();
+		Statement stm=connection.createStatement();
+		ResultSet rst=stm.executeQuery(SQL);		
+		if(rst.next()){
+			return new Customer(rst.getString("id"),rst.getString("name"),rst.getString("address"),rst.getDouble("salary"));
+		}else{
+			return null;
+		}				
+	}
+}
+
+//-----------------------------DeleteCustomerForm.java----------------------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+class UpdateCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton updateButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	UpdateCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Update Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Update Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		updateButton=new JButton("Update Customer");
+		updateButton.setFont(new Font("",1,20));
+		updateButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				
+				try{
+					Customer customer=new Customer(idText.getText(),nameText.getText(),addressText.getText(),Double.parseDouble(salaryText.getText()));
+					boolean isUpdate=CustomerController.updateCustomer(customer);
+					if(isUpdate){
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Success");
+					}else{
+						JOptionPane.showMessageDialog(UpdateCustomerForm.this,"Update Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(UpdateCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(updateButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+                //Insert code with MVC
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//--------------------------ThogaKadeMain.java------------------------
+class ThogaKadeMain{
+	public static void main(String args[]){
+		//new ViewCustomerForm().setVisible(true);	
+		//new AddCustomerForm().setVisible(true);
+		//new SearchCustomerForm().setVisible(true);
+        new UpdateCustomerForm().setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q28 Step VI (DeleteCustomerForm with MVC)
+=========================================
+//--------------------------------DBConnection.java------------------------
+import java.sql.*;
+public class DBConnection{
+	private Connection connection;
+	private static DBConnection dbConnection;
+	private DBConnection() throws ClassNotFoundException,SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		connection=DriverManager.getConnection("jdbc:mysql://192.168.1.36:3306/ThogaKade","ijse","ijse123");		
+	}
+	public static DBConnection getInstance()throws ClassNotFoundException,SQLException{
+		if(dbConnection==null){
+			dbConnection=new DBConnection();
+		}
+		return dbConnection;
+	}
+	public Connection getConnection(){
+		return connection;	
+	}
+}
+
+//--------------------------------Customer.java---------------------------
+public class Customer{
+	private String id;
+	private String name;
+	private String address;
+	private double salary;
+	
+	public Customer(){}
+	public Customer(String id, String name, String address, double salary){
+		this.id=id;
+		this.name=name;
+		this.address=address;
+		this.salary=salary;
+	}
+	public String getId(){
+		return id;
+	}
+	public String getName(){
+		return name;
+	}	
+	public String getAddress(){
+		return address;
+	}
+	public 	double getSalary(){
+		return salary;
+	}
+}
+
+//--------------------------------CustomerController.java-----------------
+import java.sql.*;
+public class CustomerController{
+	public static boolean addCustomer(Customer customer)throws ClassNotFoundException, SQLException{
+		String SQL="Insert into Customer values(?,?,?,?)";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(1,customer.getId());
+		stm.setObject(2,customer.getName());
+		stm.setObject(3,customer.getAddress());
+		stm.setObject(4,customer.getSalary());
+		int res=stm.executeUpdate();
+		return res>0;
+	}
+	public static boolean updateCustomer(Customer customer)throws ClassNotFoundException, SQLException{
+		String SQL="Update Customer set name=?,address=?,salary=? where id=?";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(4,customer.getId());
+		stm.setObject(1,customer.getName());
+		stm.setObject(2,customer.getAddress());
+		stm.setObject(3,customer.getSalary());
+		
+		int res=stm.executeUpdate();
+		return res>0;
+	}	
+	public static boolean deleteCustomer(String id)throws ClassNotFoundException, SQLException{
+		String SQL="Delete From Customer where id='"+id+"'";
+		Connection connection=DBConnection.getInstance().getConnection();
+		Statement stm=connection.createStatement();
+		int res=stm.executeUpdate(SQL);
+		return res>0;
+	}	
+	
+	public static Customer searchCustomer(String id)throws ClassNotFoundException, SQLException{
+		String SQL= "Select * From Customer where id='"+id+"'";
+		Connection connection=DBConnection.getInstance().getConnection();
+		Statement stm=connection.createStatement();
+		ResultSet rst=stm.executeQuery(SQL);		
+		if(rst.next()){
+			return new Customer(rst.getString("id"),rst.getString("name"),rst.getString("address"),rst.getDouble("salary"));
+		}else{
+			return null;
+		}				
+	}
+}
+
+//--------------------------------DeleteCustomerForm.java-----------------
+import javax.swing.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class DeleteCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JButton deleteButton;
+	private JButton cancelButton;
+	
+	private JLabel idLabel;
+	private JLabel nameLabel;
+	private JLabel addressLabel;
+	private JLabel salaryLabel;
+	
+	private JTextField idText;
+	private JTextField nameText;
+	private JTextField addressText;
+	private JTextField salaryText;
+	
+	public DeleteCustomerForm(){
+		setSize(400,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Delete Customer Form");
+		setLocationRelativeTo(null);
+		
+		titleLabel=new JLabel("Delete Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		//----------------------------------------
+		JPanel buttonPanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		deleteButton=new JButton("Delete Customer");
+		deleteButton.setFont(new Font("",1,20));
+		deleteButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				try{
+					boolean isDelete=CustomerController.deleteCustomer(idText.getText());
+					if(isDelete){
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Success");
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"Delete Fail");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+					
+			}
+		});
+		buttonPanel.add(deleteButton);
+		
+		cancelButton=new JButton("Cancel");
+		cancelButton.setFont(new Font("",1,20));
+		cancelButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				dispose();
+			}
+		}); 
+		buttonPanel.add(cancelButton);
+		
+		add("South",buttonPanel);
+		
+		JPanel labelPanel=new JPanel(new GridLayout(4,1));
+		JPanel textPanel=new JPanel(new GridLayout(4,1));
+		
+		idLabel=new JLabel("Customer Id");
+		idLabel.setFont(new Font("",1,20));
+		labelPanel.add(idLabel);
+
+		nameLabel=new JLabel("Name");
+		nameLabel.setFont(new Font("",1,20));
+		labelPanel.add(nameLabel);
+
+		addressLabel=new JLabel("Address");
+		addressLabel.setFont(new Font("",1,20));
+		labelPanel.add(addressLabel);
+
+		salaryLabel=new JLabel("Salary");
+		salaryLabel.setFont(new Font("",1,20));
+		labelPanel.add(salaryLabel);
+		
+		add("West",labelPanel);
+		
+		idText=new JTextField(5);
+		idText.setFont(new Font("",1,20));
+		idText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ervt){
+				String id=idText.getText();
+				String SQL="Select * From Customer where id='"+id+"'";
+				try{
+					Connection conn=DBConnection.getInstance().getConnection();
+					Statement stm=conn.createStatement();
+					ResultSet rst=stm.executeQuery(SQL);	
+					if(rst.next()){
+						nameText.setText(rst.getString("name"));
+						addressText.setText(rst.getString("address"));
+						salaryText.setText(rst.getString("salary"));
+					}else{
+						JOptionPane.showMessageDialog(DeleteCustomerForm.this,"No customer found..");
+					}
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(DeleteCustomerForm.this,ex.getMessage());
+				}
+		
+			}
+		});
+		JPanel idTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		idTextPanel.add(idText);
+		textPanel.add(idTextPanel);
+		
+		nameText=new JTextField(15);
+		nameText.setFont(new Font("",1,20));
+		JPanel nameTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameTextPanel.add(nameText);
+		textPanel.add(nameTextPanel);		
+
+		addressText=new JTextField(20);
+		addressText.setFont(new Font("",1,20));
+		JPanel addressTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		addressTextPanel.add(addressText);
+		textPanel.add(addressTextPanel);		
+
+		salaryText=new JTextField(8);
+		salaryText.setFont(new Font("",1,20));
+		JPanel salaryTextPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));		
+		salaryTextPanel.add(salaryText); 
+		textPanel.add(salaryTextPanel);		
+		
+		add("East",textPanel);
+		pack();
+	}	
+}
+
+//--------------------------------ThogaKadMainController.java-----------------
+class ThogaKadeMain{
+	public static void main(String args[]){
+		//new ViewCustomerForm().setVisible(true);	
+		//new AddCustomerForm().setVisible(true);
+		//new SearchCustomerForm().setVisible(true);
+		//new UpdateCustomerForm().setVisible(true);
+		new DeleteCustomerForm().setVisible(true);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+Q29 Step VII  ViewCustomerForm with MVC
+=======================================
+//---------------------------------CustomerController.java-------------------
+import java.sql.*;
+public class CustomerController{
+	public static boolean addCustomer(Customer customer)throws ClassNotFoundException, SQLException{
+		String SQL="Insert into Customer values(?,?,?,?)";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(1,customer.getId());
+		stm.setObject(2,customer.getName());
+		stm.setObject(3,customer.getAddress());
+		stm.setObject(4,customer.getSalary());
+		int res=stm.executeUpdate();
+		return res>0;
+	}
+	public static boolean updateCustomer(Customer customer)throws ClassNotFoundException, SQLException{
+		String SQL="Update Customer set name=?,address=?,salary=? where id=?";
+		Connection connection=DBConnection.getInstance().getConnection();
+		PreparedStatement stm=connection.prepareStatement(SQL);
+		stm.setObject(4,customer.getId());
+		stm.setObject(1,customer.getName());
+		stm.setObject(2,customer.getAddress());
+		stm.setObject(3,customer.getSalary());
+		
+		int res=stm.executeUpdate();
+		return res>0;
+	}	
+	public static boolean deleteCustomer(String id)throws ClassNotFoundException, SQLException{
+		String SQL="Delete From Customer where id='"+id+"'";
+		Connection connection=DBConnection.getInstance().getConnection();
+		Statement stm=connection.createStatement();
+		int res=stm.executeUpdate(SQL);
+		return res>0;
+	}	
+	public static Customer[] getAllCustomer()throws ClassNotFoundException,SQLException{
+		String SQL="Select * From Customer";
+		Connection connection=DBConnection.getInstance().getConnection();
+		Statement stm=connection.createStatement();
+		ResultSet rst=stm.executeQuery(SQL);		
+		int count=0;
+		while(rst.next()){count++;}
+		Customer[] customerList=new Customer[count];
+		
+		rst.beforeFirst();
+		int i=0;
+		while(rst.next()){
+			customerList[i++]=new Customer(rst.getString("id"),rst.getString("name"),rst.getString("address"),rst.getDouble("salary"));
+		}
+		return customerList;	
+	}
+	
+	public static Customer searchCustomer(String id)throws ClassNotFoundException, SQLException{
+		String SQL= "Select * From Customer where id='"+id+"'";
+		Connection connection=DBConnection.getInstance().getConnection();
+		Statement stm=connection.createStatement();
+		ResultSet rst=stm.executeQuery(SQL);		
+		if(rst.next()){
+			return new Customer(rst.getString("id"),rst.getString("name"),rst.getString("address"),rst.getDouble("salary"));
+		}else{
+			return null;
+		}				
+	}
+}
+
+//--------------------------------------ViewCustomerForm.java--------------------------------
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.sql.*;
+import java.awt.event.*;
+public class ViewCustomerForm extends JFrame{
+	private JLabel titleLabel;
+	private JTable customerTable;
+	private DefaultTableModel dtm;
+	private JButton reloadButton;
+	
+	public ViewCustomerForm(){
+		setSize(500,500);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("View Customer Form");
+		setLocationRelativeTo(null);
+		titleLabel=new JLabel("View Customer Form");
+		titleLabel.setFont(new Font("",1,30));
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+		add("North",titleLabel);
+		
+		JPanel buttonPanel=new JPanel();
+		reloadButton=new JButton("Reload");
+		reloadButton.setFont(new Font("",1,20));
+		reloadButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ect){
+				try{
+					Customer[] customerList=CustomerController.getAllCustomer();
+					//DefaultTableModel dtm=(DefaultTableModel)customerTable.getModel();
+					dtm.setRowCount(0);
+					for(Customer c: customerList){
+						Object[] rowData={c.getId(),c.getName(),c.getAddress(),c.getSalary()};
+						dtm.addRow(rowData);
+					}	
+				}catch(SQLException | ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(ViewCustomerForm.this,ex.getMessage());
+				}	
+			}
+		});
+		buttonPanel.add(reloadButton);
+		add("South",buttonPanel);
+		
+		String[] names={"Id", "Name","Address","Salary"};
+		dtm=new DefaultTableModel(names,5);
+		dtm.setRowCount(5);
+		customerTable=new JTable(dtm);
+		JScrollPane tablePane=new JScrollPane(customerTable);
+		add("Center",tablePane);
+		pack();
+	}	
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+Q30 From Q29 Using class "ArrayList"
+====================================

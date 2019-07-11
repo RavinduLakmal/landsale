@@ -1,0 +1,8 @@
+create Table Login(
+	id int(5),
+	name VARCHAR(100),
+	username VARCHAR(100),
+	mobile VARCHAR(100),
+	password VARCHAR(100),
+CONSTRAINT PRIMARY KEY (id)
+);
